@@ -23,7 +23,6 @@ public class RenderRunner {
 
 	private static int defaultDpi = 150;
 	private static boolean defaultSave = false;
-	private static String filePath;
 
 	private static Map<String, Class> renders = ImmutableMap.<String, Class>builder()
 			.put("ghost4j", Ghost4JRendererRun.class)
