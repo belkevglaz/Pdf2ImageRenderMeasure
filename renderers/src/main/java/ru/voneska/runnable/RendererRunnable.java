@@ -13,4 +13,6 @@ public interface RendererRunnable extends Runnable {
 	void setSaveToFile(boolean saveToFile);
 
 	void setPrint(boolean print);
+
+	String getMeta();
 }

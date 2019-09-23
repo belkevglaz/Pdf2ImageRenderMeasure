@@ -8,9 +8,12 @@ import lombok.Data;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import static ru.voneska.Measurer.DELIMITER;
 
 @Data
 public class PdfBoxRendererRun implements RendererRunnable {
+
+	private String name = "pdfbox";
 
 	private File file;
 
@@ -20,13 +23,17 @@ public class PdfBoxRendererRun implements RendererRunnable {
 
 	private boolean print;
 
+	private String meta;
+
 	@Override
 	public void run() {
 		PDDocument document = null;
 		try {
 			document = PDDocument.load(file);
 			PDFRenderer pdfRenderer = new PDFRenderer(document);
-			for (int pageCount = 0; pageCount < document.getNumberOfPages(); ++pageCount) {
+			int total = document.getNumberOfPages();
+			meta = dpi + DELIMITER + name + DELIMITER + total;
+			for (int pageCount = 0; pageCount < total; ++pageCount) {
 				BufferedImage image = pdfRenderer.renderImageWithDPI(pageCount, this.dpi, ImageType.GRAY);
 
 				if (saveToFile) {

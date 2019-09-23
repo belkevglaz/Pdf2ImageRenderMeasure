@@ -1,11 +1,29 @@
 package ru.voneska;
 
+import com.google.common.base.Stopwatch;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
-import com.google.common.base.Stopwatch;
+import lombok.Data;
 import ru.voneska.runnable.RendererRunnable;
 
+@Data
 public class Measurer {
+
+	private String resultFile;
+
+	/**
+	 * Measure type : printable or raster pdfs
+	 */
+	private String type;
+
+	/**
+	 * Result csv format
+	 * meta : <code>FILE;DPI;NAME;PAGES;</code>
+	 * result : <code>DATE</code> + meta + <code>TIME</code>
+	 */
+	public static final String DELIMITER = ";";
 
 	public static void measureMemoryUsage(RendererRunnable runnable, @SuppressWarnings("SameParameterValue") int durationSecs, @SuppressWarnings("SameParameterValue") int intervalMilliSecs) {
 		try {
@@ -34,7 +52,7 @@ public class Measurer {
 		}
 	}
 
-	public static void measureTimeUsage(RendererRunnable runnable) {
+	public void measureTimeUsage(RendererRunnable runnable) {
 		try {
 			System.out.println();
 			System.out.println("Time measure for : " + runnable.getClass().getSimpleName() + " and " + runnable.getFile().getName());
@@ -43,11 +61,26 @@ public class Measurer {
 			CompletableFuture<Void> mainProcessFuture = CompletableFuture.runAsync(runnable);
 			mainProcessFuture.get();
 			stopwatch.stop();
-			System.out.println("Elapsed time in millisec ==> " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
-
-
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter(resultFile, true))) {
+				writer.newLine();
+				writer
+						.append(type)
+						.append(DELIMITER)
+						.append(runnable.getMeta())
+						.append(DELIMITER)
+						.append(String.valueOf(stopwatch.elapsed(TimeUnit.MILLISECONDS)));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+	public static String wrapQ(String s) {
+		return "\"" + s + "\"";
+	}
+
+	public static String wrapQ(Integer i) {
+		return "\"" + String.valueOf(i) + "\"";
+	}
+
 }
