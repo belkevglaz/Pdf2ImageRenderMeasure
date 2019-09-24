@@ -54,8 +54,6 @@ public class Measurer {
 
 	public void measureTimeUsage(RendererRunnable runnable) {
 		try {
-			System.out.println();
-			System.out.println("Time measure for : " + runnable.getClass().getSimpleName() + " and " + runnable.getFile().getName());
 
 			final Stopwatch stopwatch = Stopwatch.createStarted();
 			CompletableFuture<Void> mainProcessFuture = CompletableFuture.runAsync(runnable);

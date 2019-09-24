@@ -152,7 +152,9 @@
 							<executable>chmod</executable>
 							<arguments>
 								<argument>+x</argument>
-								<argument>${build.directory}/time-measure.sh</argument>
+								<argument>${build.directory}/start-measure.sh</argument>
+								<argument>${build.directory}/transponer.sh</argument>
+								<argument>${build.directory}/timing.gp</argument>
 							</arguments>
 						</configuration>
 					</execution>

@@ -18,7 +18,7 @@ import static ru.voneska.Measurer.DELIMITER;
 @Log4j
 public class Ghost4JRendererRun implements RendererRunnable {
 
-	private String name = "\"ghostj4\"";
+	private String name = "ghostj4";
 
 	private File file;
 
