@@ -154,6 +154,18 @@ public class RenderRunner {
 		m.setType(cmd.getParsedOptionValue("type").toString());
 		m.measureTimeUsage(run);
 
+		// if need waits deactivate profilers
+		if (cmd.hasOption("wait")) {
+			Scanner userInput = new Scanner(System.in);
+			String input;
+			do {
+				System.out.println("Press any key to start...");
+
+				input = userInput.nextLine();
+
+			} while (input == null);
+		}
+
 	}
 
 

@@ -34,7 +34,7 @@ public class PdfBoxRendererRun implements RendererRunnable {
 			int total = document.getNumberOfPages();
 			meta = dpi + DELIMITER + name + DELIMITER + total;
 			for (int pageCount = 0; pageCount < total; ++pageCount) {
-				BufferedImage image = pdfRenderer.renderImageWithDPI(pageCount, this.dpi, ImageType.GRAY);
+				BufferedImage image = pdfRenderer.renderImageWithDPI(pageCount, this.dpi, ImageType.RGB);
 
 				if (saveToFile) {
 					ImageIO.write(image, "png", new File(this.getClass().getName() + "_" + pageCount + ".png"));
