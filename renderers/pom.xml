@@ -4,9 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>ru.voneska</groupId>
-	<artifactId>render-measure</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<parent>
+		<artifactId>render-measure</artifactId>
+		<groupId>ru.voneska</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>render-jar</artifactId>
+	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 
 	<name>render-measure</name>
@@ -120,16 +124,15 @@
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<!-- insert here the phase you need -->
 						<phase>package</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/target</outputDirectory>
+							<outputDirectory>${project.build.directory}</outputDirectory>
 							<resources>
 								<resource>
-									<directory>src/deploy</directory>
+									<directory>${project.basedir}/src/deploy</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>
@@ -152,9 +155,9 @@
 							<executable>chmod</executable>
 							<arguments>
 								<argument>+x</argument>
-								<argument>${build.directory}/start-measure.sh</argument>
-								<argument>${build.directory}/transponer.sh</argument>
-								<argument>${build.directory}/timing.gp</argument>
+								<argument>${project.build.directory}/start-measure.sh</argument>
+								<argument>${project.build.directory}/transponer.sh</argument>
+								<argument>${project.build.directory}/timing.gp</argument>
 							</arguments>
 						</configuration>
 					</execution>
