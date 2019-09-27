@@ -37,6 +37,8 @@ public class Ghost4JRendererRun implements RendererRunnable {
 			document.load(file);
 			SimpleRenderer renderer = new SimpleRenderer();
 			renderer.setResolution(dpi);
+			// forked jvm rendering processes
+//			renderer.setMaxProcessCount(3);
 			// render
 			List<Image> images = renderer.render(document);
 			meta = dpi + DELIMITER + name + DELIMITER + images.size();
